@@ -1,0 +1,36 @@
+PARSER_BEGIN(BracesCount)
+package io.github.chutian0610.javacc.tutorial01.statics;
+/** Simple brace matcher. */
+public class BracesCount {
+}
+PARSER_END(BracesCount)
+
+SKIP :
+{
+  " "
+| "\t"
+| "\n"
+| "\r"
+}
+
+TOKEN :
+{
+  <LBRACE: "{">
+| <RBRACE: "}">
+}
+
+/** Root production. */
+int Input() :
+{ int count; }
+{
+  count=MatchedBraces() <EOF>
+  { return count; }
+}
+
+/** Brace counting production. */
+int MatchedBraces():
+{ int nested_count=0; }
+{
+  <LBRACE> [ nested_count=MatchedBraces() ] <RBRACE>
+  { return ++nested_count; }
+}
