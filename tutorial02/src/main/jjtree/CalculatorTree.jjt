@@ -1,0 +1,61 @@
+options
+{
+    STATIC=false;
+    // 决定了生成的语法树节点是否持有解析器对象的引用
+    NODE_USES_PARSER=false;
+    // 生成 Visitor 接口
+    VISITOR=true;
+    // 是否为每个语法规则生成独立的节点类。
+    MULTI=true;
+    // 存储 first token & last token
+    TRACK_TOKENS=true;
+}
+PARSER_BEGIN(CalculatorTree)
+package io.github.chutian0610.javacc.tutorial02.tree;
+public class CalculatorTree
+{
+
+}
+PARSER_END(CalculatorTree)
+SKIP :
+{
+    " "
+|   "\r"
+|   "\t"
+|   "\n"
+}
+TOKEN:
+{
+    < NUMBER: (<DIGIT>)+ ( "." (<DIGIT>)+ )? >
+|   < DIGIT: ["0"-"9"] >
+}
+void calculate() #start : {}
+{
+    expr() <EOF>
+}
+void expr() #void : {}
+{
+    term()
+    (
+        "+" term() #AddNode(2)
+    |   "-" term() #SubtractNode(2)
+    )*
+}
+void term() #void : {}
+{
+    unary()
+    (
+        "*" unary() #MulNode(2)
+    |   "/" unary() #DivNode(2)
+    )*
+}
+void unary() #void : {}
+{
+    "-" primary() #MinusNode(2)
+|   primary()
+}
+void primary() #void: {}
+{
+    <NUMBER> #Number
+|   "(" expr() ")"
+}

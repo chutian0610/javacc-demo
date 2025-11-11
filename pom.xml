@@ -10,6 +10,7 @@
     <packaging>pom</packaging>
     <modules>
         <module>tutorial01</module>
+        <module>tutorial02</module>
     </modules>
 
     <properties>
@@ -23,7 +24,7 @@
             <dependency>
                 <groupId>org.junit.jupiter</groupId>
                 <artifactId>junit-jupiter</artifactId>
-                <version>6.0.1</version>
+                <version>5.9.3</version>
                 <scope>test</scope>
             </dependency>
         </dependencies>
@@ -36,6 +37,11 @@
                     <groupId>org.codehaus.mojo</groupId>
                     <artifactId>javacc-maven-plugin</artifactId>
                     <version>3.1.1</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>build-helper-maven-plugin</artifactId>
+                    <version>3.3.0</version>
                 </plugin>
             </plugins>
         </pluginManagement>

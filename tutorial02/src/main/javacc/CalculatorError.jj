@@ -1,0 +1,73 @@
+options
+{
+    STATIC=false;
+    LOOKAHEAD=2;
+}
+PARSER_BEGIN(CalculatorError)
+package io.github.chutian0610.javacc.tutorial02.error;
+public class CalculatorError
+{
+}
+PARSER_END(CalculatorError)
+SKIP :
+{
+    " "
+|   "\r"
+|   "\t"
+|   "\n"
+}
+TOKEN:
+{
+    < NUMBER: (<DIGIT>)+ ( "." (<DIGIT>)+ )? >
+|   < DIGIT: ["0"-"9"] >
+}
+double calculate():
+{
+    double a;
+}
+{
+    a=expr() <EOF>  { return a; }
+}
+double expr():
+{
+    double a;
+    double b;
+}
+{
+    a=term()
+    (
+        "+" b=expr()    { a += b; }
+    |   "-" b=expr()    { a -= b; }
+    )*
+                        { return a; }
+}
+double term():
+{
+    double a;
+    double b;
+}
+{
+    a=unary()
+    (
+        "*" b=term()    { a *= b; }
+    |   "/" b=term()    { a /= b; }
+    )*
+                        { return a; }
+}
+double unary():
+{
+    double a;
+}
+{
+    "-" a=primary()     { return -a; }
+|   a=primary()         { return a; }
+}
+double primary():
+{
+    Token t;
+    double a;
+}
+{
+    t=<NUMBER>          { return Double.parseDouble(t.toString()); }
+|   "(" a=expr() ")"    { return a; }
+}
