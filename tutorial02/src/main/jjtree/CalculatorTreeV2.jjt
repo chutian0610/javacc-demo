@@ -28,8 +28,12 @@ SKIP :
 }
 TOKEN:
 {
-    < NUMBER: (<DIGIT>)+ ( "." (<DIGIT>)+ )? >
-|   < DIGIT: ["0"-"9"] >
+    <NUMBER: (<DIGIT>)+ ( "." (<DIGIT>)+ )? >
+|   <DIGIT: ["0"-"9"] >
+|   <PLUS: "+">
+|   <MINUS: "-">
+|   <MULTIPLY: "*">
+|   <DIVIDE: "/">
 }
 void calculate() : {}
 {
@@ -39,16 +43,14 @@ void expr() : {}
 {
     term()
     (
-        "+" term()
-    |   "-" term()
+        Operator() term()
     )*
 }
 void term() : {}
 {
     unary()
     (
-        "*" unary()
-    |   "/" unary()
+        Operator() unary()
     )*
 }
 void unary() : {}
@@ -60,4 +62,8 @@ void primary() #void: {}
 {
     <NUMBER> #number
 |   "(" expr() ")"
+}
+void Operator()#void : {}
+{
+    <PLUS> | <MINUS> | <MULTIPLY> | <DIVIDE>
 }
