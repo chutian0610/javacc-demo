@@ -3,24 +3,10 @@ package io.github.chutian0610.javacc.tutorial02.tree;
 public class CalculateVisitor implements CalculatorTreeVisitor{
     @Override
     public Double visit(SimpleNode node, Object data) {
-        if (node instanceof ASTStartNode) {
-            return visit((ASTStartNode)node,data);
-        } else if (node instanceof ASTAddNode) {
-            return visit((ASTAddNode)node,data);
-        }else if (node instanceof ASTSubtractNode) {
-            return visit((ASTSubtractNode)node,data);
-        } else if (node instanceof ASTMulNode) {
-            return  visit((ASTMulNode)node,data);
-        }
-        else if (node instanceof ASTDivNode) {
-            return visit((ASTDivNode)node,data);
-        }
-        else if (node instanceof ASTMinusNode) {
-            return visit((ASTMinusNode)node,data);
-        } else if (node instanceof ASTNumber) {
-           return visit((ASTNumber)node,data);
-        }
-        throw new IllegalStateException("Unexpected Node:"+node.toString());
+       if(node.getClass() ==SimpleNode.class){
+           throw new IllegalStateException("Unexpected Node:"+node.toString());
+       }
+       return (Double) node.jjtAccept(this,data);
     }
 
     @Override
