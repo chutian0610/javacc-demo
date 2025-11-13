@@ -2,7 +2,7 @@ options
 {
     STATIC=false;
     // 决定了生成的语法树节点是否持有解析器对象的引用
-    NODE_USES_PARSER=true;
+    NODE_USES_PARSER=false;
     // 生成 Visitor 接口
     VISITOR=true;
     // 是否为每个语法规则生成独立的节点类。
@@ -51,9 +51,7 @@ void term() : {}
     |   "/" unary()
     )*
 }
-void unary() : {
-    String op;
-}
+void unary() : {}
 {
     "-" primary() {jjtThis.setPositive(false);}
 |   primary() {jjtThis.setPositive(true);}
