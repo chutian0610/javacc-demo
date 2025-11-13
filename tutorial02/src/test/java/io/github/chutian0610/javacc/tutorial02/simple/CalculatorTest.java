@@ -61,4 +61,10 @@ public class CalculatorTest {
         Calculator parser = new Calculator(new StringReader("1-2-3"));
         Assertions.assertEquals(-4,parser.calculate());
     }
+    @DisplayName("test -1+2*3 = 5")
+    @Test
+    public void testCalculate10() throws ParseException {
+        Calculator parser = new Calculator(new StringReader("-1+2*3"));
+        Assertions.assertEquals(5,parser.calculate());
+    }
 }

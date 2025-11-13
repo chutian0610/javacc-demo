@@ -1,5 +1,6 @@
 package io.github.chutian0610.javacc.tutorial02.tree;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.io.StringReader;
@@ -14,6 +15,8 @@ public class CalculatorTest {
         Node root = parser.jjtree.rootNode();
         CalculatorPrintVisitor visitor = new CalculatorPrintVisitor(exp);
         root.jjtAccept(visitor, 0);
+        Double result = (Double) root.jjtAccept(new CalculateVisitor(),null);
+        Assertions.assertEquals(6,result);
     }
     @Test
     public void testCalculate02() throws ParseException {
@@ -23,14 +26,18 @@ public class CalculatorTest {
         Node root = parser.jjtree.rootNode();
         CalculatorPrintVisitor visitor = new CalculatorPrintVisitor(exp);
         root.jjtAccept(visitor, 0);
+        Double result = (Double) root.jjtAccept(new CalculateVisitor(),null);
+        Assertions.assertEquals(6,result);
     }
     @Test
     public void testCalculate03() throws ParseException {
-        String exp = "1+2*3";
+        String exp = "-1+2*3";
         CalculatorTree parser = new CalculatorTree(new StringReader(exp));
         parser.calculate();
         Node root = parser.jjtree.rootNode();
         CalculatorPrintVisitor visitor = new CalculatorPrintVisitor(exp);
         root.jjtAccept(visitor, 0);
+        Double result = (Double) root.jjtAccept(new CalculateVisitor(),null);
+        Assertions.assertEquals(5,result);
     }
 }

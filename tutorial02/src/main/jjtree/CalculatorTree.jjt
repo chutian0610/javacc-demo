@@ -29,7 +29,7 @@ TOKEN:
     < NUMBER: (<DIGIT>)+ ( "." (<DIGIT>)+ )? >
 |   < DIGIT: ["0"-"9"] >
 }
-void calculate() #start : {}
+void calculate() #StartNode : {}
 {
     expr() <EOF>
 }
@@ -51,7 +51,7 @@ void term() #void : {}
 }
 void unary() #void : {}
 {
-    "-" primary() #MinusNode(2)
+    "-" primary() #MinusNode
 |   primary()
 }
 void primary() #void: {}
